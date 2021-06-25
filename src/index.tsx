@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { createGlobalStyle } from 'styled-components';
 import { App } from './App';
 import { Theme } from './styles/theme';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/700.css';
 
 const GlobalStyle = createGlobalStyle`
   :root {
@@ -21,6 +23,7 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
     margin: 0;
     padding: 0;
+    font-family: 'Roboto', sans-serif;
   }
 `;
 
