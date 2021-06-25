@@ -16,7 +16,10 @@ export function App() {
       <Column title='Done'>
         <Card text='Begin to use static typing' />
       </Column>
-      <AddNewItem toggleButtonText='+ Add another list' onAdd={console.log} />
+      <AddNewItem
+        toggleButtonText='+ Add another list'
+        onAdd={(text) => console.log(text)}
+      />
     </AppContainer>
   );
 }

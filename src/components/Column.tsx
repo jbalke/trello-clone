@@ -13,7 +13,7 @@ export const Column: FC<ColumnProps> = ({ title, children }) => {
       {children}
       <AddNewItem
         toggleButtonText='+ Add another task'
-        onAdd={console.log}
+        onAdd={(text) => console.log(text)}
         dark
       />
     </ColumnContainer>
