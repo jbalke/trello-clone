@@ -27,6 +27,7 @@ export const ColumnTitle = styled.div`
 
 export const CardContainer = styled.div`
   background-color: ${Theme.color.white};
+  color: ${Theme.color.black};
   cursor: pointer;
   margin-bottom: 0.5rem;
   padding: 0.5rem 1rem;
