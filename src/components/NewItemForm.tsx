@@ -10,21 +10,21 @@ export const NewItemForm = ({ onAdd }: NewItemFormProps) => {
   const [text, setText] = useState('');
   const inputRef = useFocus();
 
-  const handleAddText = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      onAdd(text);
-    }
-  };
+  // const handleAddText = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  //   if (event.key === 'Enter') {
+  //     onAdd(text);
+  //   }
+  // };
 
   return (
-    <NewItemFormContainer>
+    <NewItemFormContainer onSubmit={(e) => {e.preventDefault(); onAdd(text)}}>
       <NewItemInput
         value={text}
         onChange={(e) => setText(e.target.value)}
-        onKeyPress={handleAddText}
         ref={inputRef}
+        required
       />
-      <NewItemButton onClick={() => onAdd(text)}>Create</NewItemButton>
+      <NewItemButton type="submit">Create</NewItemButton>
     </NewItemFormContainer>
   );
 };
