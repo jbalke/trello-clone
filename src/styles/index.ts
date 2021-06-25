@@ -14,7 +14,7 @@ export const AppContainer = styled.div`
 export const ColumnContainer = styled.div`
   background-color: ${Theme.color.grey};
   border-radius: 3px;
-  flex: 0 0 300px;
+  flex: 0 1 300px;
   margin-right: 1.2rem;
   min-height: 40px;
   padding: 0.5rem 0.5rem;
@@ -45,7 +45,7 @@ export const AddItemButton = styled.button<AddItemButtonProps>`
   border: none;
   color: ${({ dark }) => (dark ? Theme.color.black : Theme.color.white)};
   cursor: pointer;
-  max-width: 300px;
+  flex: 0 1 300px;
   padding: 10px 12px;
   text-align: left;
   transition: background 85ms ease-in();
