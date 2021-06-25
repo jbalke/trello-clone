@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { NewItemButton, NewItemFormContainer, NewItemInput } from '../styles';
+import useFocus from '../utils/useFocus';
 
 type NewItemFormProps = {
   onAdd(text: string): void;
@@ -7,13 +8,7 @@ type NewItemFormProps = {
 
 export const NewItemForm = ({ onAdd }: NewItemFormProps) => {
   const [text, setText] = useState('');
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, []);
+  const inputRef = useFocus();
 
   return (
     <NewItemFormContainer>
