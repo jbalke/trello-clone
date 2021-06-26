@@ -15,7 +15,7 @@ export const AddNewItem = ({
   dark,
 }: AddNewItemProps) => {
   const [showForm, setShowForm] = useState(false);
-  const ref = useClickOutside((e) => {
+  const ref = useClickOutside<HTMLFormElement>(() => {
     setShowForm(false);
   });
 
@@ -26,7 +26,7 @@ export const AddNewItem = ({
           onAdd(text);
           setShowForm(false);
         }}
-        ref={ref as React.RefObject<HTMLFormElement>}
+        ref={ref}
       />
     );
   }

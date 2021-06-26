@@ -2,11 +2,11 @@ import { useEffect, useRef } from 'react';
 
 type Fn = (e: MouseEvent) => void;
 
-export const useClickOutside = (
+export const useClickOutside = <T extends HTMLElement>(
   callback: Fn,
-  initialValue: HTMLElement | null = null
+  initialValue: T | null = null
 ) => {
-  const elementRef = useRef<HTMLElement>(initialValue);
+  const elementRef = useRef<T>(initialValue);
 
   useEffect(() => {
     if (!elementRef.current) return;
@@ -17,6 +17,7 @@ export const useClickOutside = (
       }
     };
     document.addEventListener('click', handleOnClick);
+
     return () => {
       document.removeEventListener('click', handleOnClick);
     };
