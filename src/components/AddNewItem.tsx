@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { AddItemButton } from '../styles';
+import { useClickOutside } from '../utils/useClickOutside';
 import { NewItemForm } from './NewItemForm';
 
 type AddNewItemProps = {
@@ -14,6 +15,9 @@ export const AddNewItem = ({
   dark,
 }: AddNewItemProps) => {
   const [showForm, setShowForm] = useState(false);
+  const ref = useClickOutside((e) => {
+    setShowForm(false);
+  });
 
   if (showForm) {
     return (
@@ -22,12 +26,13 @@ export const AddNewItem = ({
           onAdd(text);
           setShowForm(false);
         }}
+        ref={ref as React.RefObject<HTMLFormElement>}
       />
     );
   }
 
   return (
-    <AddItemButton dark={dark} onClick={() => setShowForm(true)}>
+    <AddItemButton dark={dark} onClick={(e) => setShowForm(true)}>
       {toggleButtonText}
     </AddItemButton>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { NewItemButton, NewItemFormContainer, NewItemInput } from '../styles';
 import useFocus from '../utils/useFocus';
 
@@ -6,7 +6,7 @@ type NewItemFormProps = {
   onAdd(text: string): void;
 };
 
-export const NewItemForm = ({ onAdd }: NewItemFormProps) => {
+export const NewItemForm = forwardRef<HTMLFormElement, NewItemFormProps>(({ onAdd }: NewItemFormProps, ref) => {
   const [text, setText] = useState('');
   const inputRef = useFocus();
 
@@ -17,7 +17,7 @@ export const NewItemForm = ({ onAdd }: NewItemFormProps) => {
   // };
 
   return (
-    <NewItemFormContainer onSubmit={(e) => {e.preventDefault(); onAdd(text)}}>
+    <NewItemFormContainer onSubmit={(e) => {e.preventDefault(); onAdd(text)}} ref={ref}>
       <NewItemInput
         value={text}
         onChange={(e) => setText(e.target.value)}
@@ -27,4 +27,4 @@ export const NewItemForm = ({ onAdd }: NewItemFormProps) => {
       <NewItemButton type="submit">Create</NewItemButton>
     </NewItemFormContainer>
   );
-};
+});
