@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import create from 'zustand';
 
 export type Task = {
@@ -14,6 +15,8 @@ export type List = {
 export type AppState = {
   lists: List[];
   getTasksByListId(id: string): Task[];
+  addTaskToList(text: string, listId: string): void;
+  addList(title: string): void;
 };
 
 export const useStore = create<AppState>((set, get) => ({
@@ -36,5 +39,19 @@ export const useStore = create<AppState>((set, get) => ({
   ],
   getTasksByListId(id) {
     return get().lists.find((list) => list.id === id)?.tasks ?? [];
+  },
+  addTaskToList(text, id) {
+    set((state) => ({
+      lists: state.lists.map((list) =>
+        list.id === id
+          ? { ...list, tasks: [...list.tasks, { id: nanoid(), text }] }
+          : list
+      ),
+    }));
+  },
+  addList(text) {
+    set((state) => ({
+      lists: [...state.lists, { id: nanoid(), text, tasks: [] }],
+    }));
   },
 }));
