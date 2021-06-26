@@ -25,8 +25,17 @@ export const ColumnTitle = styled.div`
   font-weight: 700;
 `;
 
-export const CardContainer = styled.div`
-  background-color: ${Theme.color.white};
+export const TaskList = styled.div<{ isDraggingOver: boolean }>`
+  outline: ${({ isDraggingOver }) =>
+    isDraggingOver ? `${Theme.color.primary} 3px solid` : 'none'};
+  background-color: ${({ isDraggingOver }) =>
+    isDraggingOver ? Theme.color.primary : 'transparent'};
+  transition: background-color 200ms ease;
+`;
+
+export const CardContainer = styled.div<{ isDragging: boolean }>`
+  background-color: ${({ isDragging }) =>
+    isDragging ? Theme.color.primaryLight : Theme.color.white};
   color: ${Theme.color.black};
   cursor: pointer;
   margin-bottom: 0.5rem;

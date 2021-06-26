@@ -3,7 +3,7 @@ import { createTheme } from 'theme-in-css';
 export const Theme = createTheme({
   color: {
     primary: '#3179ba',
-    primaryLight: '',
+    primaryLight: '#65a5dc',
     primaryDark: '',
     highlight: '#5aac44',
     black: '#000',

@@ -10,12 +10,6 @@ export const NewItemForm = forwardRef<HTMLFormElement, NewItemFormProps>(({ onAd
   const [text, setText] = useState('');
   const inputRef = useFocus();
 
-  // const handleAddText = (event: React.KeyboardEvent<HTMLInputElement>) => {
-  //   if (event.key === 'Enter') {
-  //     onAdd(text);
-  //   }
-  // };
-
   return (
     <NewItemFormContainer onSubmit={(e) => {e.preventDefault(); onAdd(text)}} ref={ref}>
       <NewItemInput
