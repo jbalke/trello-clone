@@ -110,10 +110,11 @@ export const useStore = createStore<AppState>((set, get) => ({
         1
       )[0];
 
-      const destinationListIndex = findItemIndexById(
-        state.lists,
-        destinationListId
-      );
+      const destinationListIndex =
+        sourceListId === destinationListId
+          ? sourceListIndex
+          : findItemIndexById(state.lists, destinationListId);
+
       state.lists[destinationListIndex].tasks.splice(
         destinationItemIndex,
         0,
