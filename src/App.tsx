@@ -41,7 +41,7 @@ export const App = () => {
           <Column key={id} title={text} id={id} />
         ))}
       </DragDropContext>
-      <FlexContainer width='300px' direction="column">
+      <FlexContainer direction='column'>
         <AddNewItem
           toggleButtonText='+ Add another list'
           onAdd={(text) => addList(text)}
