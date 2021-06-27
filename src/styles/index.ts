@@ -12,31 +12,34 @@ export const FlexContainer = styled.div<{
 `;
 
 export const AppContainer = styled.div`
-  align-items: flex-start;
   background-color: ${Theme.color.primary};
+  height: 100%;
+  padding: 1.2rem;
+`;
+
+export const ListsContainer = styled.div`
+  align-items: flex-start;
+  background-color: transparent;
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
   min-height: 100vh;
-  padding: 1.2rem;
   width: 100%;
 
   & ${FlexContainer} {
-      width: 100%;
-    }
+    width: 100%;
+  }
 
   @media screen and (min-width: 400px) {
     & {
       flex-direction: row;
-    };
+    }
 
     & ${FlexContainer} {
       width: 300px;
     }
   }
 `;
-
-
 
 export const ColumnContainer = styled.div`
   background-color: ${Theme.color.grey};
@@ -48,8 +51,7 @@ export const ColumnContainer = styled.div`
   width: 100%;
 
   @media screen and (min-width: 400px) {
-  flex: 0 1 300px;
-
+    flex: 0 1 300px;
   }
 `;
 

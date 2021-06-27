@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid';
 import pipe from 'ramda/es/pipe';
 import create, { StateCreator } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
-import { findItemIndexById, moveItem } from '../utils/arrayUtils';
+import { findItemIndexById } from '../utils/arrayUtils';
 
 export type Task = {
   id: string;
@@ -21,15 +21,19 @@ export type AppState = {
   getTasksByListId(id: string): Task[];
   addTaskToList(text: string, listId: string): void;
   addList(title: string): void;
-  moveTaskToList(taskId: string, destinationListId: string): void;
-  moveList(draggedId: string, hoverId: string): void;
-  moveTask(sourceListId: string, sourceListIndex: number, destinationListId: string, destinationListIndex: number): void;
+  moveList(fromIndex: number, toIndex: number): void;
+  moveTask(
+    sourceListId: string,
+    sourceListIndex: number,
+    destinationListId: string,
+    destinationListIndex: number
+  ): void;
 };
 
 const enableDevTools = <T extends AppState>(
   config: StateCreator<T>
 ): StateCreator<T> =>
-  devtools((set, get, api) => config(set, get, api), "MyStore");
+  devtools((set, get, api) => config(set, get, api), 'MyStore');
 
 const persistToLocalStorage = <T extends AppState>(
   config: StateCreator<T>
@@ -73,7 +77,7 @@ export const useStore = createStore<AppState>((set, get) => ({
       tasks: [{ id: 'c2', text: 'Begin to use static typing' }],
     },
   ],
-  getTasksByListId(id:string) {
+  getTasksByListId(id: string) {
     return get().lists.find((list) => list.id === id)?.tasks ?? [];
   },
   addTaskToList(text, id) {
@@ -84,24 +88,37 @@ export const useStore = createStore<AppState>((set, get) => ({
       }
     });
   },
-  addList(text:string) {
+  addList(text: string) {
     set((state) => void state.lists.push({ id: nanoid(), text, tasks: [] }));
   },
-  moveTaskToList(taskId, destinationListId) {},
-  moveList(draggedId, hoverId) {
+  moveList(fromIndex: number, toIndex: number) {
     set((state) => {
-      const dragIndex = findItemIndexById(state.lists, draggedId);
-      const hoverIndex = findItemIndexById(state.lists, hoverId);
-      state.lists = moveItem(state.lists, dragIndex, hoverIndex);
+      const list = state.lists.splice(fromIndex, 1)[0];
+      state.lists.splice(toIndex, 0, list);
     });
   },
-  moveTask(sourceListId: string, sourceItemIndex: number, destinationListId: string, destinationItemIndex: number) {
-    set((state) => { 
+  moveTask(
+    sourceListId: string,
+    sourceItemIndex: number,
+    destinationListId: string,
+    destinationItemIndex: number
+  ) {
+    set((state) => {
       const sourceListIndex = findItemIndexById(state.lists, sourceListId);
-      const task = state.lists[sourceListIndex].tasks.splice(sourceItemIndex, 1)[0];
-      
-      const destinationListIndex = findItemIndexById(state.lists, destinationListId);
-      state.lists[destinationListIndex].tasks.splice(destinationItemIndex, 0, task)
+      const task = state.lists[sourceListIndex].tasks.splice(
+        sourceItemIndex,
+        1
+      )[0];
+
+      const destinationListIndex = findItemIndexById(
+        state.lists,
+        destinationListId
+      );
+      state.lists[destinationListIndex].tasks.splice(
+        destinationItemIndex,
+        0,
+        task
+      );
     });
   },
 }));

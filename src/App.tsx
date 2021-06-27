@@ -3,7 +3,7 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import { AddNewItem } from './components/AddNewItem';
 import { Column } from './components/Column';
 import { AppState, useStore } from './state/store';
-import { AppContainer, FlexContainer } from './styles';
+import { AppContainer, FlexContainer, ListsContainer } from './styles';
 
 const listSelector = (state: AppState) => state.lists;
 const addListSelector = (state: AppState) => state.addList;
@@ -16,37 +16,39 @@ export const App = () => {
 
   return (
     <AppContainer>
-      <DragDropContext
-        onDragEnd={({ destination, source, draggableId }) => {
-          if (!destination) {
-            return;
-          }
+      <ListsContainer>
+        <DragDropContext
+          onDragEnd={({ destination, source, draggableId }) => {
+            if (!destination) {
+              return;
+            }
 
-          if (
-            destination.droppableId === source.droppableId &&
-            destination.index === source.index
-          ) {
-            return;
-          }
-          console.log({ destination, source, draggableId });
-          moveTask(
-            source.droppableId,
-            source.index,
-            destination.droppableId,
-            destination.index
-          );
-        }}
-      >
-        {lists.map(({ id, text }) => (
-          <Column key={id} title={text} id={id} />
-        ))}
-      </DragDropContext>
-      <FlexContainer direction='column'>
-        <AddNewItem
-          toggleButtonText='+ Add another list'
-          onAdd={(text) => addList(text)}
-        />
-      </FlexContainer>
+            if (
+              destination.droppableId === source.droppableId &&
+              destination.index === source.index
+            ) {
+              return;
+            }
+            console.log({ destination, source, draggableId });
+            moveTask(
+              source.droppableId,
+              source.index,
+              destination.droppableId,
+              destination.index
+            );
+          }}
+        >
+          {lists.map(({ id, text }) => (
+            <Column key={id} title={text} id={id} />
+          ))}
+        </DragDropContext>
+        <FlexContainer direction='column'>
+          <AddNewItem
+            toggleButtonText='+ Add another list'
+            onAdd={(text) => addList(text)}
+          />
+        </FlexContainer>
+      </ListsContainer>
     </AppContainer>
   );
 };
