@@ -1,9 +1,9 @@
 import React from 'react';
+import { DragDropContext } from 'react-beautiful-dnd';
 import { AddNewItem } from './components/AddNewItem';
 import { Column } from './components/Column';
 import { AppState, useStore } from './state/store';
-import { AppContainer } from './styles';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { AppContainer, FlexContainer } from './styles';
 
 const listSelector = (state: AppState) => state.lists;
 const addListSelector = (state: AppState) => state.addList;
@@ -41,10 +41,12 @@ export const App = () => {
           <Column key={id} title={text} id={id} />
         ))}
       </DragDropContext>
-      <AddNewItem
-        toggleButtonText='+ Add another list'
-        onAdd={(text) => addList(text)}
-      />
+      <FlexContainer width='300px' direction="column">
+        <AddNewItem
+          toggleButtonText='+ Add another list'
+          onAdd={(text) => addList(text)}
+        />
+      </FlexContainer>
     </AppContainer>
   );
 };

@@ -6,18 +6,31 @@ export const AppContainer = styled.div`
   background-color: ${Theme.color.primary};
   display: flex;
   flex-flow: row nowrap;
+  gap: 1.2rem;
   height: 100%;
   padding: 1.2rem;
   width: 100%;
+`;
+
+export const FlexContainer = styled.div<{
+  width?: string;
+  direction?: 'row' | 'column';
+}>`
+  display: flex;
+  flex-direction: ${({ direction }) => (direction ? direction : 'row')};
+  background-color: transparent;
+  width: ${({ width }) => (width ? width : '100%')};
 `;
 
 export const ColumnContainer = styled.div`
   background-color: ${Theme.color.grey};
   border-radius: 3px;
   flex: 0 1 300px;
-  margin-right: 1.2rem;
-  min-height: 40px;
+  min-height: 100px;
   padding: 0.5rem 0.5rem;
+
+  display: flex;
+  flex-flow: column nowrap;
 `;
 
 export const ColumnTitle = styled.div`
@@ -26,8 +39,9 @@ export const ColumnTitle = styled.div`
 `;
 
 export const TaskList = styled.div<{ isDraggingOver: boolean }>`
-  outline: ${({ isDraggingOver }) =>
-    isDraggingOver ? `${Theme.color.primary} 3px solid` : 'none'};
+  flex: 1;
+  padding: 5px;
+
   background-color: ${({ isDraggingOver }) =>
     isDraggingOver ? Theme.color.primary : 'transparent'};
   transition: background-color 200ms ease;
@@ -55,7 +69,6 @@ export const AddItemButton = styled.button<AddItemButtonProps>`
   border: none;
   color: ${({ dark }) => (dark ? Theme.color.black : Theme.color.white)};
   cursor: pointer;
-  flex: 0 1 300px;
   padding: 10px 12px;
   text-align: left;
   transition: background 85ms ease-in();
