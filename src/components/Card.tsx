@@ -1,7 +1,19 @@
 import React from 'react';
-import { CardContainer } from '../styles';
 import { Draggable } from 'react-beautiful-dnd';
+import styled from 'styled-components';
+import { Theme } from '../styles/theme';
 
+const CardContainer = styled.div<{ isDragging: boolean }>`
+  background-color: ${({ isDragging }) =>
+    isDragging ? Theme.color.primaryLight : Theme.color.white};
+  color: ${Theme.color.black};
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 1rem;
+  max-width: 300px;
+  border-radius: 3px;
+  box-shadow: ${Theme.shadow.normal};
+`;;
 type CardProps = {
   id: string;
   text: string;
@@ -13,9 +25,9 @@ export function Card({ text, id, index }: CardProps) {
     <Draggable draggableId={id} index={index}>
       {(provided, snapshot) => (
         <CardContainer
+          ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          ref={provided.innerRef}
           isDragging={snapshot.isDragging}
         >
           {text}
