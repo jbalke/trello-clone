@@ -1,3 +1,4 @@
+import { useWindowWidth } from '@react-hook/window-size';
 import React, { useState } from 'react';
 import {
   DragDropContext,
@@ -6,13 +7,12 @@ import {
   DropResult,
 } from 'react-beautiful-dnd';
 import styled from 'styled-components';
+import shallow from 'zustand/shallow';
 import { AddNewItem } from './components/AddNewItem';
 import { Column } from './components/Column';
 import { AppState, useStore } from './state/store';
 import { FlexContainer } from './styles';
 import { Theme } from './styles/theme';
-import shallow from 'zustand/shallow'
-import {useWindowWidth} from '@react-hook/window-size'
 
 const AppContainer = styled.div`
   display: flex;
@@ -38,9 +38,10 @@ const AppContainer = styled.div`
   }
 `;
 
-const ListsContainer = styled.div<{isDraggingOver: boolean}>`
+const ListsContainer = styled.div<{ isDraggingOver: boolean }>`
   align-items: flex-start;
-  background-color: ${({isDraggingOver}) => isDraggingOver ? Theme.color.primaryLight : 'transparent'};
+  background-color: ${({ isDraggingOver }) =>
+    isDraggingOver ? Theme.color.primaryLight : 'transparent'};
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
@@ -54,7 +55,8 @@ const ListsContainer = styled.div<{isDraggingOver: boolean}>`
   }
 `;
 
-const stateSelector = (state: AppState) => [state.lists, state.addList, state.moveList, state.moveTask] as const;
+const stateSelector = (state: AppState) =>
+  [state.lists, state.addList, state.moveList, state.moveTask] as const;
 
 export const App = () => {
   const [lists, addList, moveList, moveTask] = useStore(stateSelector, shallow);
@@ -79,11 +81,9 @@ export const App = () => {
     ) {
       return;
     }
-    console.log({ destination, source, draggableId });
 
     if (source.droppableId === 'board' && destination.droppableId === 'board') {
-      moveList(source.index, destination.index)
-
+      moveList(source.index, destination.index);
     } else {
       moveTask(
         source.droppableId,
@@ -104,7 +104,11 @@ export const App = () => {
   return (
     <AppContainer>
       <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
-        <Droppable droppableId='board' type='LIST' direction={windowWidth >= 400 ? 'horizontal' : 'vertical'}>
+        <Droppable
+          droppableId='board'
+          type='LIST'
+          direction={windowWidth >= 400 ? 'horizontal' : 'vertical'}
+        >
           {(provided, snapshot) => (
             <ListsContainer
               ref={provided.innerRef}

@@ -37,7 +37,7 @@ const TaskList = styled.div<{ isDraggingOver: boolean; dropDisabled: boolean }>`
   transition: background-color 200ms ease;
 `;
 
-const listSelector = (state: AppState) => state.getTasksByListId;
+const tasksSelector = (state: AppState) => state.getTasksByListId;
 const addTaskToListSelector = (state: AppState) => state.addTaskToList;
 
 type ColumnProps = {
@@ -48,7 +48,7 @@ type ColumnProps = {
 };
 
 export const Column = ({ title, id, index, dropDisabled }: ColumnProps) => {
-  const tasks = useStore(listSelector)(id);
+  const tasks = useStore(tasksSelector)(id);
   const addTaskToList = useStore(addTaskToListSelector);
 
   return (
